@@ -1,12 +1,9 @@
 package com.prasanna.vwapsimulator.ticksimulator;
 
-import com.prasanna.vwapsimulator.Parser.Parser;
 import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.task.RandomTickSourceTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Reader;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;

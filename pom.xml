@@ -59,5 +59,11 @@
             <artifactId>junit</artifactId>
             <version>4.10</version>
         </dependency>
+        <dependency>
+            <groupId>com.natpryce</groupId>
+            <artifactId>make-it-easy</artifactId>
+            <version>4.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -12,7 +12,7 @@ public class Tick {
     private  TickDirection tickDirection;
     private  Long size;
     private  BigDecimal price;
-    private  LocalDateTime localDateTime;
+    private  LocalDateTime timeStamp;
 
     private Tick(){
 
@@ -24,7 +24,7 @@ public class Tick {
         this.tickDirection = tickDirection;
         this.size = size;
         this.price = price;
-        this.localDateTime = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public static final Tick tickFor(Instrument instrument, TickDirection tickDirection, Venue venue, Long size, BigDecimal price) {
@@ -92,7 +92,7 @@ public class Tick {
                 ", tickDirection=" + tickDirection +
                 ", size=" + size +
                 ", price=" + price +
-                ", localDateTime=" + localDateTime +
+                ", timeStamp=" + timeStamp +
                 '}';
     }
 }
