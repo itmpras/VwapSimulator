@@ -22,7 +22,7 @@ public class RandomTickSourceTask implements Runnable {
       Random random = new Random();
       int randomNum = random.nextInt((ticks.size() - 2) + 1) + 0;
       Tick tick = ticks.get(randomNum);
-      logger.info("Adding tick {} to destinationQueue {}", tick);
+      logger.info("Adding {} to destinationQueue", tick);
       try {
          destinationQueue.put(tick);
       } catch (InterruptedException e) {
