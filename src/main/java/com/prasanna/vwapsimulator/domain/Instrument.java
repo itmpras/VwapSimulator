@@ -30,6 +30,12 @@ public class Instrument {
 
     public static Instrument from(String instrument) {
         return new Instrument(instrument);
+    }
 
+    @Override
+    public String toString() {
+        return "Instrument{" +
+                "symbol='" + symbol + '\'' +
+                '}';
     }
 }

@@ -1,7 +1,6 @@
 package com.prasanna.vwapsimulator.ticksimulator;
 
 
-
 import com.prasanna.vwapsimulator.Parser.GsonParser;
 import com.prasanna.vwapsimulator.Parser.Parser;
 import com.prasanna.vwapsimulator.domain.Instrument;
@@ -14,6 +13,8 @@ import org.junit.Test;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -25,11 +26,15 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class TicksSimulatorJsonParserIntegrationTest {
     TicksSimulator ticksSimulator;
     Parser parser;
+    BufferedReader reader;
 
     @Before
     public void setUp() throws Exception {
         parser = new GsonParser();
-        ticksSimulator = new TicksSimulator(parser);
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("Ticks.json");
+        reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+        BlockingQueue<Tick> queue = new LinkedBlockingQueue<>();
+        ticksSimulator = new TicksSimulator(reader, parser, queue);
     }
 
     @Test
@@ -54,8 +59,7 @@ public class TicksSimulatorJsonParserIntegrationTest {
 
     @Test
     public void shouldSerializeTicksFromFile() throws Exception {
-        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("Ticks.json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+
 
         List<Tick> ticks = ticksSimulator.generateTicksFrom(reader);
 

@@ -23,4 +23,11 @@ public class Venue {
     public static Venue from(String venue) {
         return new Venue(venue);
     }
+
+    @Override
+    public String toString() {
+        return "Venue{" +
+                "marketVenue='" + marketVenue + '\'' +
+                '}';
+    }
 }
