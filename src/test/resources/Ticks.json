@@ -1,0 +1,122 @@
+[
+  {
+    "instrument": {
+      "symbol": "VOD.L"
+    },
+    "venue": {
+      "marketVenue": "L"
+    },
+    "tickDirection": "BUY",
+    "size": 100,
+    "price": 100,
+    "localDateTime": {
+      "date": {
+        "year": 2016,
+        "month": 2,
+        "day": 23
+      },
+      "time": {
+        "hour": 23,
+        "minute": 55,
+        "second": 41,
+        "nano": 894000000
+      }
+    }
+  },
+  {
+    "instrument": {
+      "symbol": "LYOD.L"
+    },
+    "venue": {
+      "marketVenue": "L"
+    },
+    "tickDirection": "BUY",
+    "size": 100,
+    "price": 100,
+    "localDateTime": {
+      "date": {
+        "year": 2016,
+        "month": 2,
+        "day": 23
+      },
+      "time": {
+        "hour": 23,
+        "minute": 56,
+        "second": 42,
+        "nano": 894000000
+      }
+    }
+  },
+  {
+    "instrument": {
+      "symbol": "LAD.L"
+    },
+    "venue": {
+      "marketVenue": "CHIX"
+    },
+    "tickDirection": "SELL",
+    "size": 100,
+    "price": 100,
+    "localDateTime": {
+      "date": {
+        "year": 2016,
+        "month": 2,
+        "day": 23
+      },
+      "time": {
+        "hour": 23,
+        "minute": 57,
+        "second": 41,
+        "nano": 894000000
+      }
+    }
+  },
+  {
+    "instrument": {
+      "symbol": "RBS.L"
+    },
+    "venue": {
+      "marketVenue": "BATS"
+    },
+    "tickDirection": "SELL",
+    "size": 100,
+    "price": 100,
+    "localDateTime": {
+      "date": {
+        "year": 2016,
+        "month": 2,
+        "day": 23
+      },
+      "time": {
+        "hour": 23,
+        "minute": 58,
+        "second": 41,
+        "nano": 894000000
+      }
+    }
+  },
+  {
+    "instrument": {
+      "symbol": "VOD.L"
+    },
+    "venue": {
+      "marketVenue": "BATS"
+    },
+    "tickDirection": "SELL",
+    "size": 100,
+    "price": 100,
+    "localDateTime": {
+      "date": {
+        "year": 2016,
+        "month": 2,
+        "day": 23
+      },
+      "time": {
+        "hour": 23,
+        "minute": 59,
+        "second": 41,
+        "nano": 894000000
+      }
+    }
+  }
+]
