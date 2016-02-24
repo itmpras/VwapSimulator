@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,7 +27,8 @@ public class ApplicationRunner {
       InputStream resourceAsStream = ApplicationRunner.class.getClassLoader().getResourceAsStream("Ticks.json");
       Reader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
       ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
-      TicksSimulator ticksSimulator = new TicksSimulator(reader, parser, new LinkedBlockingQueue<Tick>(50), scheduledExecutorService, 1000L);
+      List<Tick> ticks = parser.parse(reader, Tick.class);
+      TicksSimulator ticksSimulator = new TicksSimulator(ticks, new LinkedBlockingQueue<Tick>(50), scheduledExecutorService, 1000L);
       ticksSimulator.generateRandomTicks();
    }
 }
