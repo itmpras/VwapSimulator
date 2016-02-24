@@ -7,6 +7,7 @@ import com.prasanna.vwapsimulator.domain.Instrument;
 import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.domain.TickDirection;
 import com.prasanna.vwapsimulator.domain.Venue;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,9 +24,11 @@ import static org.hamcrest.core.IsNull.notNullValue;
  * Created by prasniths on 23/02/16.
  */
 public class TicksSimulatorJsonParserIntegrationTest {
-    TicksSimulator ticksSimulator;
-    Parser parser;
-    BufferedReader reader;
+    private TicksSimulator ticksSimulator;
+    private Parser parser;
+    private BufferedReader reader;
+    private ScheduledExecutorService scheduledExecutorService;
+
 
     @Before
     public void setUp() throws Exception {
@@ -33,7 +36,8 @@ public class TicksSimulatorJsonParserIntegrationTest {
         InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("Ticks.json");
         reader = new BufferedReader(new InputStreamReader(resourceAsStream));
         BlockingQueue<Tick> queue = new LinkedBlockingQueue<>();
-        ticksSimulator = new TicksSimulator(reader, parser, queue);
+        scheduledExecutorService = Executors.newScheduledThreadPool(2);
+        ticksSimulator = new TicksSimulator(reader, parser, queue,scheduledExecutorService,1000L);
     }
 
     @Test
@@ -75,5 +79,11 @@ public class TicksSimulatorJsonParserIntegrationTest {
                 "\"price\":" + price + "," +
                 "\"localDateTime\":{\"date\":{\"year\":2016,\"month\":2,\"day\":23},\"time\":{\"hour\":23,\"minute\":55,\"second\":41,\"nano\":894000000}}}" +
                 "]";
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+        ticksSimulator.shutDown();
     }
 }

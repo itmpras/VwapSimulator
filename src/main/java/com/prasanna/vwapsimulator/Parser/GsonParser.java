@@ -8,6 +8,7 @@ import com.prasanna.vwapsimulator.domain.Tick;
 
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,24 +16,24 @@ import java.util.List;
  */
 public class GsonParser implements Parser {
 
-    private Gson gson;
-    private JsonParser jsonParser;
+   private Gson gson;
+   private JsonParser jsonParser;
 
-    public GsonParser() {
-        gson = new Gson();
-        jsonParser = new JsonParser();
-    }
+   public GsonParser() {
+      gson = new Gson();
+      jsonParser = new JsonParser();
+   }
 
-    @Override
-    public <T> List<T> parse(Reader input, Class<T> targetClass) {
+   @Override
+   public <T> List<T> parse(Reader input, Class<T> targetClass) {
 
-        JsonArray jArray = jsonParser.parse(input).getAsJsonArray();
-        List<T> target = new ArrayList<>();
-        for (JsonElement obj : jArray) {
-            T tick = gson.fromJson(obj, targetClass);
-            target.add(tick);
-        }
+      JsonArray jArray = jsonParser.parse(input).getAsJsonArray();
+      List<T> target = new ArrayList<>();
+      for (JsonElement obj : jArray) {
+         T tick = gson.fromJson(obj, targetClass);
+         target.add(tick);
+      }
 
-        return target;
-    }
+      return Collections.unmodifiableList(target);
+   }
 }
