@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.prasanna.vwapsimulator.domain.Tick;
 
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class GsonParser implements Parser {
     }
 
     @Override
-    public <T> List<T> parse(String input, Class<T> targetClass) {
+    public <T> List<T> parse(Reader input, Class<T> targetClass) {
 
         JsonArray jArray = jsonParser.parse(input).getAsJsonArray();
         List<T> target = new ArrayList<>();

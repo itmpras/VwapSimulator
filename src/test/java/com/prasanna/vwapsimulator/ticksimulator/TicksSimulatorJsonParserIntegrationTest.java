@@ -1,7 +1,7 @@
 package com.prasanna.vwapsimulator.ticksimulator;
 
 
-import com.google.gson.stream.JsonReader;
+
 import com.prasanna.vwapsimulator.Parser.GsonParser;
 import com.prasanna.vwapsimulator.Parser.Parser;
 import com.prasanna.vwapsimulator.domain.Instrument;
@@ -22,7 +22,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 /**
  * Created by prasniths on 23/02/16.
  */
-public class TicksSimulatorTest {
+public class TicksSimulatorJsonParserIntegrationTest {
     TicksSimulator ticksSimulator;
     Parser parser;
 
@@ -43,9 +43,8 @@ public class TicksSimulatorTest {
         Tick tick = Tick.buyTickFor(Instrument.from(instrument), Venue.from(venue), size, price);
 
         String tickJsonString = getTicksJsonStringFor(instrument, venue, TickDirection.BUY, size, price);
-        System.out.println(tickJsonString);
 
-        List<Tick> ticks = ticksSimulator.generateTicksFor(tickJsonString);
+        List<Tick> ticks = ticksSimulator.generateTicksFrom(new StringReader(tickJsonString));
 
         assertThat(ticks, is(notNullValue()));
         assertThat(ticks.size(), is(1));
@@ -53,6 +52,16 @@ public class TicksSimulatorTest {
 
     }
 
+    @Test
+    public void shouldSerializeTicksFromFile() throws Exception {
+        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("Ticks.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream));
+
+        List<Tick> ticks = ticksSimulator.generateTicksFrom(reader);
+
+        assertThat(ticks, is(notNullValue()));
+        assertThat(ticks.size(), is(5));
+    }
 
     private String getTicksJsonStringFor(String instrument, String venue, TickDirection tickDirection
             , long size, BigDecimal price) {

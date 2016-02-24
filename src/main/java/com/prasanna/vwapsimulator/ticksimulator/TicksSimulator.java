@@ -1,23 +1,25 @@
 package com.prasanna.vwapsimulator.ticksimulator;
 
-import com.google.gson.*;
 import com.prasanna.vwapsimulator.Parser.Parser;
 import com.prasanna.vwapsimulator.domain.Tick;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.io.Reader;
 import java.util.List;
 
-/**
- * Created by prasniths on 23/02/16.
- */
+
 public class TicksSimulator {
-    Parser parser;
+    private final Parser parser;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TicksSimulator.class);
+
 
     public TicksSimulator(Parser parser) {
         this.parser = parser;
     }
 
-    public List<Tick> generateTicksFor(String tickJsonString) {
+
+    public List<Tick> generateTicksFrom(Reader tickJsonString) {
         return parser.parse(tickJsonString, Tick.class);
     }
 }
