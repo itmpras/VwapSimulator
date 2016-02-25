@@ -6,14 +6,13 @@ import java.math.RoundingMode;
 /**
  * VWAP = Sum(number of shares * share price ) / total Shares bought
  */
-public class RunningVwap {
+public class Vwap {
 
     private BigDecimal orderValue;
     private BigDecimal totalShares;
     private BigDecimal vwap;
 
-    // TODO to handle thread failures
-    public RunningVwap(BigDecimal orderValue, BigDecimal totalShares) {
+    public Vwap(BigDecimal orderValue, BigDecimal totalShares) {
         this.orderValue = orderValue;
         this.orderValue.setScale(2, RoundingMode.HALF_UP);
         this.totalShares = totalShares;
@@ -26,23 +25,23 @@ public class RunningVwap {
 
     }
 
-    public static RunningVwap initialVWAPValue() {
-        return new RunningVwap(BigDecimal.ZERO, BigDecimal.ZERO);
+    public static Vwap initialVWAPValue() {
+        return new Vwap(BigDecimal.ZERO, BigDecimal.ZERO);
     }
 
-    public RunningVwap apply(Tick tick) {
+    public Vwap apply(Tick tick) {
 
         BigDecimal price = tick.getPrice();
         BigDecimal size = new BigDecimal(tick.getSize());
 
         BigDecimal newOrderValue = orderValue.add(price.multiply(size));
         BigDecimal newTotalSize = totalShares.add(size);
-        return new RunningVwap(newOrderValue.setScale(4, RoundingMode.HALF_UP), newTotalSize.setScale(4, RoundingMode.HALF_UP));
+        return new Vwap(newOrderValue.setScale(4, RoundingMode.HALF_UP), newTotalSize.setScale(4, RoundingMode.HALF_UP));
     }
 
     @Override
     public String toString() {
-        return "RunningVwap{" +
+        return "Vwap{" +
                 "orderValue=" + orderValue +
                 ", totalShares=" + totalShares +
                 ", vwap=" + vwap +

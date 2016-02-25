@@ -8,4 +8,6 @@ import com.prasanna.vwapsimulator.observer.TicksObserver;
  */
 public interface OrderBookMap extends TicksObserver {
     boolean addInstrument(Instrument instrument);
+
+    void shutDown();
 }

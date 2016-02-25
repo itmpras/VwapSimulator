@@ -4,6 +4,9 @@ package com.prasanna.vwapsimulator.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Immutable class to represent tick
+ */
 public class Tick implements Comparable {
 
 

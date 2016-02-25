@@ -2,11 +2,12 @@ package com.prasanna.vwapsimulator.task;
 
 import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.orderbook.OrderBookMap;
+import com.prasanna.vwapsimulator.util.WorkerThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by prasniths on 24/02/16.
+ * OrderBookMapUpdateTask
  */
 public class OrderBookMapUpdateTask implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderBookMapUpdateTask.class);
@@ -21,8 +22,10 @@ public class OrderBookMapUpdateTask implements Runnable {
 
     @Override
     public void run() {
-        Thread.currentThread().setName("OrderBookMapUpdateTask");
+        WorkerThreadUtil.enrichWorkerThread("OrderBookMapUpdateTask");
         LOGGER.info("Updating tick {}", tick);
         orderBookMap.update(tick);
     }
+
+
 }

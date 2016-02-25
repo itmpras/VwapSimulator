@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
-/**
- * Created by gopalp on 24/02/2016.
- */
+
 public class SellSideTickComparator extends BaseTickComparator {
     public final static Logger logger = LoggerFactory.getLogger(SellSideTickComparator.class);
 

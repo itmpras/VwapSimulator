@@ -1,6 +1,9 @@
 package com.prasanna.vwapsimulator.domain;
 
 
+/**
+ * Immutable class to represent Instrument
+ */
 public class Instrument {
     final String symbol;
 

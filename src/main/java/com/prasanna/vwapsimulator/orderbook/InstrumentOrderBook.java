@@ -1,6 +1,6 @@
 package com.prasanna.vwapsimulator.orderbook;
 
-import com.prasanna.vwapsimulator.domain.RunningVwap;
+import com.prasanna.vwapsimulator.domain.Vwap;
 import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.observer.TicksObserver;
 import com.prasanna.vwapsimulator.orderbook.comparator.BuySideTickComparator;
@@ -15,34 +15,45 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Created by prasniths on 24/02/16.
+ * OrderBook for each instrument
+ *
+ * Not thread safe - Shouldn't use multiple thread to update instance of this class
  */
 public class InstrumentOrderBook implements TicksObserver {
+    // Buy order tick books
     private BoundedPriorityOrderBook buyOrderBook;
+    // Sell order tick books
     private BoundedPriorityOrderBook sellOrderBook;
+    // Tick source
     private BlockingQueue<Tick> ticksForInstrument;
-    private RunningVwap buyorderVWAP;
-    private RunningVwap sellOrderVWAP;
+    // Running BuySide VWAP
+    private Vwap buyorderVWAP;
+    // Running SellSide VWAP
+    private Vwap sellOrderVWAP;
 
     private ExecutorService executorService;
     private volatile boolean isRunning = true;
     private static final Logger LOGGER = LoggerFactory.getLogger(InstrumentOrderBook.class);
 
-    public InstrumentOrderBook(BoundedPriorityOrderBook buyOrderBook, BoundedPriorityOrderBook sellOrderBook, BlockingQueue<Tick> ticksForInstrument, ExecutorService executorService) {
+    private InstrumentOrderBook(BoundedPriorityOrderBook buyOrderBook, BoundedPriorityOrderBook sellOrderBook, BlockingQueue<Tick> ticksForInstrument, ExecutorService executorService) {
         this.buyOrderBook = buyOrderBook;
         this.sellOrderBook = sellOrderBook;
         this.ticksForInstrument = ticksForInstrument;
         this.executorService = executorService;
-        buyorderVWAP = RunningVwap.initialVWAPValue();
-        sellOrderVWAP = RunningVwap.initialVWAPValue();
+        buyorderVWAP = Vwap.initialVWAPValue();
+        sellOrderVWAP = Vwap.initialVWAPValue();
     }
 
-    public static InstrumentOrderBook newOrderBook() {
+    public static InstrumentOrderBook newOrderBook(int orderBookDepth,int blockingQueueCapacity) {
+        // We just need only one thread to process updates for each instrument.
+        // This is to avoid synchronization , if we have to use multiple thread.
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
         return new InstrumentOrderBook(
-                new BoundedPriorityOrderBook(new BuySideTickComparator(), 30), // TODO TO come from config
-                new BoundedPriorityOrderBook(new SellSideTickComparator(), 30),
-                new LinkedBlockingQueue<>(50),
-                Executors.newFixedThreadPool(1));
+                new BoundedPriorityOrderBook(new BuySideTickComparator(), orderBookDepth),
+                new BoundedPriorityOrderBook(new SellSideTickComparator(), orderBookDepth),
+                new LinkedBlockingQueue<>(blockingQueueCapacity),
+
+                executorService);
 
     }
 
@@ -76,19 +87,19 @@ public class InstrumentOrderBook implements TicksObserver {
         return ticksForInstrument;
     }
 
-    public RunningVwap getBuyorderVWAP() {
+    public Vwap getBuyorderVWAP() {
         return buyorderVWAP;
     }
 
-    public RunningVwap getSellOrderVWAP() {
+    public Vwap getSellOrderVWAP() {
         return sellOrderVWAP;
     }
 
-    public void setBuyorderVWAP(RunningVwap buyorderVWAP) {
+    public void setBuyorderVWAP(Vwap buyorderVWAP) {
         this.buyorderVWAP = buyorderVWAP;
     }
 
-    public void setSellOrderVWAP(RunningVwap sellOrderVWAP) {
+    public void setSellOrderVWAP(Vwap sellOrderVWAP) {
         this.sellOrderVWAP = sellOrderVWAP;
     }
 }

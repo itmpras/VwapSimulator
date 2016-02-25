@@ -1,0 +1,4 @@
+1) Instrument - I am assuming we using Equity asset class instruments
+2) To start the program  java -Dlogback.configurationFile=../resources/logback.xml com.prasanna.vwapsimulator.ApplicationRunner
+3) Json file in resource folder can be changed to test various scenarios
+4) UpdateInstrumentOrderBookTask thread logs  calculated VWAP results.

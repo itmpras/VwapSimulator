@@ -5,6 +5,7 @@ import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.listner.TicksFeedSource;
 import com.prasanna.vwapsimulator.observer.TicksObserver;
 import com.prasanna.vwapsimulator.task.OrderBookMapUpdateTask;
+import com.prasanna.vwapsimulator.util.WorkerThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,7 @@ public class InstrumentOrderBookRepository implements TicksFeedSource, TicksObse
         this.sourceQueue = sourceQueue;
         this.orderBookMap = orderBookMap;
         this.executorService = executorService;
+
     }
 
     public void start() {
@@ -39,7 +41,8 @@ public class InstrumentOrderBookRepository implements TicksFeedSource, TicksObse
 
     @Override
     public void update(Tick tick) {
-           executorService.execute(new OrderBookMapUpdateTask(orderBookMap, tick));
+        OrderBookMapUpdateTask command = new OrderBookMapUpdateTask(orderBookMap, tick);
+        executorService.execute(command);
     }
 
     public void shutDown() {
@@ -50,7 +53,8 @@ public class InstrumentOrderBookRepository implements TicksFeedSource, TicksObse
 
         @Override
         public void run() {
-            Thread.currentThread().setName("InstrumentOrderBookRepository.ReadTickSourceTask");
+            WorkerThreadUtil.enrichWorkerThread("InstrumentOrderBookRepository.ReadTickSourceTask");
+
             LOGGER.info("Starting to read SourceQueue");
             while (isRunning) {
                 try {
@@ -58,7 +62,6 @@ public class InstrumentOrderBookRepository implements TicksFeedSource, TicksObse
                     update(take);
                 } catch (InterruptedException e) {
                     LOGGER.error("Interrupted");
-                    // TODO to check
                     Thread.currentThread().interrupt();
                 }
             }

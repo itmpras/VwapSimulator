@@ -19,9 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-/**
- * Created by prasniths on 23/02/16.
- */
+
 public class GsonParserIntegrationTest {
 
    private Parser parser;

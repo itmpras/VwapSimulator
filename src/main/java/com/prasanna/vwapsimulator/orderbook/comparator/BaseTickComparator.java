@@ -6,7 +6,7 @@ import com.prasanna.vwapsimulator.domain.TickDirection;
 import java.util.Comparator;
 
 /**
- * Created by prasniths on 24/02/16.
+ *  Base class having boiler plate code
  */
 public abstract class BaseTickComparator  implements Comparator<Tick> {
     protected void validate(Tick o1, Tick o2, TickDirection directionToCompare) {

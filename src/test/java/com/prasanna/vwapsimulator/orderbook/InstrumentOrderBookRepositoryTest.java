@@ -59,28 +59,4 @@ public class InstrumentOrderBookRepositoryTest {
         repository.requestTicksFeedForInstrument(Instrument.from("VOD.L"));
         context.assertIsSatisfied();
     }
-
-    @Ignore
-    // TODO
-    public void shouldUpdateTickToOrderMap() throws Exception {
-
-        sourceQueue.add(make(MakeItEasy.a(TickMaker.TICK_INSTANTIATOR)));
-        context.checking(new Expectations() {
-            {
-                oneOf(orderBookMap).update(with(any(Tick.class)));
-                then(tickUpdateState.is("updateMap"));
-
-            }
-        });
-
-        repository.start();
-        deterministicExecutor1.runUntilIdle();
-
-        threadingPolicy.waitUntil(tickUpdateState.is("updateMap"), 1000);
-        context.assertIsSatisfied();
-        repository.shutDown();
-
-    }
-
-
 }

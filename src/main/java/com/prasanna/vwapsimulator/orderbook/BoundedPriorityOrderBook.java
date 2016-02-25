@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.function.Consumer;
 
 /**
- * Created by prasniths on 24/02/16.
+ * BoundedPriorityOrderBook
  */
 public class BoundedPriorityOrderBook implements OrderBook {
     private Comparator<Tick> comparator;
@@ -35,7 +35,7 @@ public class BoundedPriorityOrderBook implements OrderBook {
     @Override
     public Iterator<Tick> getTicks() {
         Tick[] ticks = getTicksSortedArray();
-        return new InteranlIterator(ticks);
+        return new InternalIterator(ticks);
     }
 
     private Tick[] getTicksSortedArray() {
@@ -44,12 +44,15 @@ public class BoundedPriorityOrderBook implements OrderBook {
         return ticks;
     }
 
-    private class InteranlIterator implements Iterator<Tick> {
+    /**
+     * Private class to return InternalIterator
+     */
+    private class InternalIterator implements Iterator<Tick> {
 
         private Tick[] ticks;
         int index = 0;
 
-        public InteranlIterator(Tick[] ticks) {
+        public InternalIterator(Tick[] ticks) {
             this.ticks = ticks;
         }
 
@@ -79,5 +82,12 @@ public class BoundedPriorityOrderBook implements OrderBook {
         public void forEachRemaining(Consumer<? super Tick> action) {
             throw new UnsupportedOperationException("UnSupported operation");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "BoundedPriorityOrderBook{" +
+                "priorityQueue=" + priorityQueue +
+                '}';
     }
 }

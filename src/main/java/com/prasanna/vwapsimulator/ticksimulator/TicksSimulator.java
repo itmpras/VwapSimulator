@@ -10,6 +10,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ *  TicksSimulator
+ */
 public class TicksSimulator {
    private static final Logger LOGGER = LoggerFactory.getLogger(TicksSimulator.class);
    private final BlockingQueue<Tick> destinationQueue;

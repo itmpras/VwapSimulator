@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by prasniths on 24/02/16.
+ * GSon
  */
 public class GsonParser implements Parser {
 
