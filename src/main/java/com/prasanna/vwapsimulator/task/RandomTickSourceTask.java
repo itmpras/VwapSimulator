@@ -9,25 +9,27 @@ import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 
 public class RandomTickSourceTask implements Runnable {
-   public final static Logger logger = LoggerFactory.getLogger(RandomTickSourceTask.class);
-   private List<Tick> ticks;
-   private BlockingQueue<Tick> destinationQueue;
+    public final static Logger logger = LoggerFactory.getLogger(RandomTickSourceTask.class);
+    private List<Tick> ticks;
+    private BlockingQueue<Tick> destinationQueue;
 
-   public RandomTickSourceTask(List<Tick> ticks, BlockingQueue<Tick> destinationQueue) {
-      this.ticks = ticks;
-      this.destinationQueue = destinationQueue;
-   }
-   @Override
-   public void run() {
-      Random random = new Random();
-      int randomNum = random.nextInt((ticks.size() - 2) + 1) + 0;
-      Tick tick = ticks.get(randomNum);
-      logger.info("Adding {} to destinationQueue", tick);
-      try {
-         destinationQueue.put(tick);
-      } catch (InterruptedException e) {
-         logger.warn("Thread interrupted by exception {}", e.getCause());
-         Thread.currentThread().interrupt();
-      }
-   }
+    public RandomTickSourceTask(List<Tick> ticks, BlockingQueue<Tick> destinationQueue) {
+        this.ticks = ticks;
+        this.destinationQueue = destinationQueue;
+    }
+
+    @Override
+    public void run() {
+        Thread.currentThread().setName("RandomTickSourceTask");
+        Random random = new Random();
+        int randomNum = random.nextInt((ticks.size() - 2) + 1) + 0;
+        Tick tick = ticks.get(randomNum);
+        logger.info("Adding {} to destinationQueue", tick);
+        try {
+            destinationQueue.put(tick);
+        } catch (InterruptedException e) {
+            logger.warn("Thread interrupted by exception {}", e.getCause());
+            Thread.currentThread().interrupt();
+        }
+    }
 }

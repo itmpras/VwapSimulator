@@ -4,17 +4,17 @@ package com.prasanna.vwapsimulator.domain;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Tick {
+public class Tick implements Comparable {
 
 
-    private  Instrument instrument;
-    private  Venue venue;
-    private  TickDirection tickDirection;
-    private  Long size;
-    private  BigDecimal price;
-    private  LocalDateTime timeStamp;
+    private Instrument instrument;
+    private Venue venue;
+    private TickDirection tickDirection;
+    private Long size;
+    private BigDecimal price;
+    private LocalDateTime timeStamp;
 
-    private Tick(){
+    private Tick() {
 
     }
 
@@ -94,5 +94,11 @@ public class Tick {
                 ", price=" + price +
                 ", timeStamp=" + timeStamp +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Tick tick = (Tick) o;
+        return price.compareTo(tick.getPrice());
     }
 }

@@ -5,7 +5,7 @@ import com.prasanna.vwapsimulator.domain.Tick;
 
 public interface TicksObserver {
    /**
-    * To update received tick to Obeservers
+    * To updateOrderBook received tick to Obeservers
     * @param tick
     */
    void update(Tick tick);
