@@ -28,12 +28,15 @@ public class ApplicationRunner {
     private static final Logger LOGGER = getLogger(ApplicationRunner.class);
 
     public static void main(String[] args) throws InterruptedException {
-
+        // For sake of simplicity wiring different components here.
 
         LOGGER.info("Starting Tick simulator");
         Parser parser = new GsonParser();
-        int tickQueueCapacity = 50;
+        // Tick queue capacity
+        int tickQueueCapacity = 100;
+        // OrderBook depth
         int instrumentOrderBookDepth = 30;
+        // Per instrument queue capacity
         int instrumentTickQueueDepth = 100;
         // Blocking Queue where ticks from various sources will get updated
         LinkedBlockingQueue<Tick> tickQueue = new LinkedBlockingQueue<>(tickQueueCapacity);
