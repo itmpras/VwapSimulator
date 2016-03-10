@@ -2,10 +2,7 @@ package com.prasanna.vwapsimulator.orderbook;
 
 import com.prasanna.vwapsimulator.domain.Tick;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -44,9 +41,6 @@ public class BoundedPriorityOrderBook implements OrderBook {
         return ticks;
     }
 
-    /**
-     * Private class to return InternalIterator
-     */
     private class InternalIterator implements Iterator<Tick> {
 
         private Tick[] ticks;

@@ -1,15 +1,15 @@
 package com.prasanna.vwapsimulator;
 
-import ch.qos.logback.classic.LoggerContext;
 import com.prasanna.vwapsimulator.Parser.GsonParser;
 import com.prasanna.vwapsimulator.Parser.Parser;
 import com.prasanna.vwapsimulator.domain.Instrument;
 import com.prasanna.vwapsimulator.domain.Tick;
 import com.prasanna.vwapsimulator.orderbook.ConcurrentInstrumentOrderBookMap;
 import com.prasanna.vwapsimulator.orderbook.InstrumentOrderBookRepository;
+import com.prasanna.vwapsimulator.spring.ApplicationConfiguration;
 import com.prasanna.vwapsimulator.ticksimulator.TicksSimulator;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.config.java.context.JavaConfigApplicationContext;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,6 +29,9 @@ public class ApplicationRunner {
 
     public static void main(String[] args) throws InterruptedException {
         // For sake of simplicity wiring different components here.
+
+        JavaConfigApplicationContext javaConfigApplicationContext = new JavaConfigApplicationContext();
+        javaConfigApplicationContext.addConfigClass(ApplicationConfiguration.class);
 
         LOGGER.info("Starting Tick simulator");
         Parser parser = new GsonParser();
@@ -55,9 +58,9 @@ public class ApplicationRunner {
         final InstrumentOrderBookRepository instrumentOrderBookRepository = new InstrumentOrderBookRepository(tickQueue, concurrentInstrumentOrderBookMap, instrumentOrderBookRepoExecutor);
         instrumentOrderBookRepository.start();
 
+        concurrentInstrumentOrderBookMap.addInstrument(Instrument.from("LAD.L"));
         // Adding Instruments , for which we need tick updates
         Thread.sleep(2000);
-        concurrentInstrumentOrderBookMap.addInstrument(Instrument.from("LAD.L"));
         Thread.sleep(1000);
         concurrentInstrumentOrderBookMap.addInstrument(Instrument.from("LYOD.L"));
         Thread.sleep(1000);

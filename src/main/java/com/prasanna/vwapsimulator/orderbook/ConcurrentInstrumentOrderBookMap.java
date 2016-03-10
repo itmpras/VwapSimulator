@@ -66,12 +66,9 @@ public class ConcurrentInstrumentOrderBookMap implements OrderBookMap {
 
     @Override
     public void shutDown() {
-        Set<Map.Entry<Instrument, InstrumentOrderBook>> entries = map.entrySet();
-        for (Map.Entry<Instrument, InstrumentOrderBook> entry : entries) {
-            LOGGER.info("Shutting Down order book for {}", entry.getKey());
-            InstrumentOrderBook value = entry.getValue();
-            value.shutdown();
-        }
+        map.entrySet().stream()
+                .map(instrumentInstrumentOrderBookEntry -> instrumentInstrumentOrderBookEntry.getValue())
+                .forEach(InstrumentOrderBook::shutdown);
 
     }
 }
