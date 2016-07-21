@@ -1,4 +1,4 @@
-1) Instrument - I am assuming we using Equity asset class instruments
+1) Instrument - I am assuming we using Equity asset class instruments ---
 2) To start the program
 mvn exec:java -Dexec.mainClass="com.prasanna.vwapsimulator.ApplicationRunner" -Dexec.args="logback.configurationFile=../resources/logback.xml"
 3) Json file in resource folder can be changed to test various scenarios
